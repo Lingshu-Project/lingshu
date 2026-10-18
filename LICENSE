@@ -1,0 +1,93 @@
+灵书源码公开与商业分成许可协议 1.0
+Lingshu Source-Available and Commercial Revenue Share License 1.0
+生效版本：0.3.0 起；协议日期：2026-10-18
+
+项目来源：灵书 / Lingshu Project
+官方源代码：https://github.com/Lingshu-Project/lingshu
+本项目原创代码的权利由相应权利人保留；项目名称是公开来源标识，不要求披露任何
+自然人的真实姓名、私人邮箱、住址或个人账号资料。
+
+一、授权
+遵守本协议即可使用、研究、复制、修改、建立分支、编译、分发和商业化本协议涵盖
+的代码及其衍生作品。个人自用和非商业使用免费。商业使用同样允许；达到第四条
+门槛后承担分成义务。修改版可以使用自己的产品名称，也可以闭源分发，但不得删除
+要求的来源说明，不得通过转授权免除仍适用的来源和商业分成义务。
+
+二、来源署名
+对外分发或使用本项目核心代码提供服务时，应在软件“关于”、文档或服务说明中至少
+一个用户通常可访问的位置，清晰保留以下文字及有效链接：
+“源自灵书 / Lingshu；官方源代码：https://github.com/Lingshu-Project/lingshu”。
+同时保留本 LICENSE、NOTICE 及适用的第三方许可。修改版应说明已经修改，避免
+使用户误以为它是官方发行版。无需使用维护者真实姓名或私人资料。本协议不授予
+冒充官方项目或声称获得维护者背书的权利。
+
+三、范围和定义
+“商业化产品”指使用本项目代码或其衍生代码，通过销售、订阅、付费服务、广告、
+商业托管或其他与该产品直接相关的方式取得收入的软件或服务。
+“商业化用户”指实际使用该商业化产品中本项目所提供能力的独立终端用户。按自然人
+去重，同一人的多个账号或设备计一人；机构购买席位时按实际启用席位计。免费试用
+和广告支持用户亦计入；仅用于开发测试且不对外提供商业服务的账号不计入。
+“累计用户数”指该经营者及受其控制的主体所运营的相关商业化产品累计商业化用户
+的去重总数；不得拆分产品或主体规避门槛。互不控制的独立分支经营者分别计算。
+“相关产品收入”指相关销售、订阅、服务、广告等实际收入，扣除实际退款和代收后
+上缴的流转税；不扣工资、研发、营销、佣金等经营成本。组合销售按可核实且合理的
+独立售价比例分配，只计算相关产品部分。
+
+四、门槛与分成
+累计商业化用户数不超过 20,000 人时，不收取商业分成。首次达到第 20,001 人的
+时点为“触发时点”。从该时点起，按之后产生并实际收到的相关产品收入的 20% 计提
+许可分成。触发时点之前的收入不追溯计收，其他无关产品收入不计入。分期付款按
+相应产品交易的实际履行期间合理划分，不得仅为规避分成提前收款或转移收入。
+例：触发时点之前取得 100 万元收入，之后取得 10 万元相关产品收入，则分成为
+2 万元；不对之前的 100 万元追溯收费。
+
+五、申报与结算
+达到门槛后 30 日内，通过官方仓库提交不含个人资料和财务明细的商业许可联络请求，
+由维护者提供非公开结算联络方式。后续按自然季度汇总，季度结束后 30 日内提供
+累计用户数、触发时点、本期相关收入和分成金额的汇总报告，并按双方确认的有效
+渠道付款。无需提供终端用户姓名、邮箱、完整账号列表等个人识别资料。
+维护者尚未提供有效收款渠道的，经营者应保留应付款及汇总记录；在渠道提供之前，
+单纯因无法付款不视为违约，也不免除已产生的义务。支付方式、税务凭证、币种换算
+及争议解决等事项可另行书面明确。维护者不得要求公开披露个人隐私或未公开财务
+资料作为常规结算条件。本协议不要求软件加入用户追踪或上报机制。
+
+六、贡献和另行许可
+贡献者保留其相应权利，并应确认有权按本协议提交贡献。提交贡献不授权以贡献者
+真实姓名作额外宣传。不同条款的商业授权或豁免，须由对相应代码具有授权权利的
+一方明确授予，不能仅凭分支维护者声明免除上游义务。
+
+七、第三方及历史许可
+依赖库、字体、运行时等第三方材料适用各自许可，本协议不改变这些许可，也不追溯
+撤销已经获得的历史授权。0.2.0 及更早版本所附 MIT 许可继续适用于按该许可获得的
+相应代码；原文保存在 licenses/legacy-0.2.0-MIT.txt。本次新增或修改部分按本协议
+提供。本协议不赋予任何 Typora 代码、商标、素材或授权机制的使用权。
+
+八、违约、终止和免责
+未遵守来源、分成等实质义务的，相关授权可被终止；首次收到明确违约通知后 30 日
+内纠正的，可恢复相关授权。到期分成义务不因终止消失。软件按“现状”提供，不保证
+适用性、无错误或不侵权。在法律允许的范围内，权利人和贡献者不对使用本软件产生
+的损失承担责任；本条不排除依法不得排除的责任。
+
+九、性质与文本
+本协议允许公开源码、分支和商业使用，但含商业分成条件，不是 OSI 批准的标准开源
+许可证。不得将其标注为 MIT、Apache-2.0 等不相符的标准许可。中文完整文本为准；
+下列英文摘要便于理解，不改变中文条款。
+
+English summary (the complete Chinese terms above govern):
+From version 0.3.0, original additions and modifications use this custom
+source-available license. Use, study, modification, forks, redistribution, and
+commercial use are permitted. Retain this license, notices, and visible source
+attribution: “Derived from Lingshu; https://github.com/Lingshu-Project/lingshu”.
+Do not imply official endorsement. Personal names and private contact disclosure
+are not required. Independent commercial operators count their own cumulative
+unique users; controlled entities and related products are combined without
+double counting. Once this count first exceeds 20,000, 20% of attributable
+product revenue arising after that point is payable. Earlier revenue is not
+charged retroactively. Revenue excludes actual refunds and remitted indirect
+taxes, not operating costs. Report aggregate figures quarterly and arrange
+private settlement with maintainers through the official repository; do not post
+personal or financial details in public issues. Personal noncommercial use is
+free. Third-party and historical grants remain effective. The software is
+supplied as is, subject to liabilities that law does not permit to be excluded.
+This royalty-bearing license is not an OSI-approved open-source license. See the
+Chinese terms for definitions, settlement, contribution, breach, and other terms.

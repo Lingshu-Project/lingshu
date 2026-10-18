@@ -1,0 +1,14 @@
+/* 墨页原创：林间。以 #write 为正文范围，也适用于导出。 */
+#write { max-width: 800px; margin: auto; padding: 52px 56px; color: #233c32; background: #f7faf6; font-family: "Segoe UI", "Microsoft YaHei", sans-serif; font-size: 17px; line-height: 1.85; }
+#write h1, #write h2, #write h3 { color: #235d43; line-height: 1.4; }
+#write h1 { border-bottom: 2px solid #b7cfbd; padding-bottom: .45em; }
+#write p { margin: 1em 0; }
+#write a { color: #28714e; text-decoration-color: #a2cbb0; }
+#write blockquote { border-left: 4px solid #8eb79c; margin-left: 0; padding: .2em 1em; color: #526b5c; background: #eaf2e9; }
+#write pre { padding: 1em 1.25em; border: 1px solid #d4e3d6; border-radius: 8px; background: #edf3ec; color: #294437; overflow: auto; }
+#write code { font-family: Consolas, monospace; }
+#write table { border-collapse: collapse; width: 100%; }
+#write th, #write td { border: 1px solid #c6d8c9; padding: .5em .8em; }
+#write th { background: #e5eee2; }
+#write hr { border: 0; border-top: 1px solid #bfd1c1; }
+@media print { #write { max-width: none; padding: 0; background: white; color: #15271e; font-size: 11pt; } #write pre, #write blockquote { break-inside: avoid; } #write h1, #write h2, #write h3 { break-after: avoid; } }

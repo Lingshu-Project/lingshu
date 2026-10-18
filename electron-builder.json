@@ -1,0 +1,22 @@
+{
+  "appId": "org.lingshu.markdown",
+  "productName": "灵书 Markdown",
+  "copyright": "Copyright © 2026 Lingshu Project",
+  "directories": { "output": "../../outputs/lingshu-0.3.0-installer" },
+  "win": {
+    "target": [{ "target": "nsis", "arch": ["x64"] }],
+    "executableName": "Lingshu",
+    "signAndEditExecutable": false
+  },
+  "nsis": {
+    "oneClick": true,
+    "perMachine": false,
+    "createDesktopShortcut": true,
+    "createStartMenuShortcut": true,
+    "shortcutName": "灵书",
+    "uninstallDisplayName": "灵书 Markdown",
+    "deleteAppDataOnUninstall": false,
+    "runAfterFinish": false,
+    "artifactName": "Lingshu-Setup-${version}-x64.${ext}"
+  }
+}

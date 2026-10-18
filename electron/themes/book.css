@@ -1,0 +1,15 @@
+/* 墨页原创：书页。无需外部字体或网络资源。 */
+#write { max-width: 740px; margin: auto; padding: 64px 60px; color: #352f28; background: #fffdf8; font-family: Georgia, "Noto Serif CJK SC", "SimSun", serif; font-size: 18px; line-height: 1.9; }
+#write h1, #write h2, #write h3 { color: #5b392b; line-height: 1.45; font-weight: 600; }
+#write h1 { text-align: center; margin-bottom: 1.2em; }
+#write h2 { margin-top: 1.8em; border-bottom: 1px solid #ded4c4; padding-bottom: .3em; }
+#write p { margin: 1em 0; }
+#write a { color: #8d4b35; }
+#write blockquote { margin: 1.3em 0; padding: .15em 1.2em; border-left: 3px solid #c9b59b; color: #786653; font-style: italic; }
+#write pre { padding: 1em 1.2em; background: #f3eee4; border-radius: 4px; overflow: auto; font-size: .88em; line-height: 1.65; }
+#write code { font-family: Consolas, monospace; }
+#write table { width: 100%; border-collapse: collapse; }
+#write th, #write td { border-bottom: 1px solid #d8cbbb; padding: .5em .7em; text-align: left; }
+#write th { border-top: 2px solid #a98a68; color: #684a34; }
+#write hr { border: 0; border-top: 1px solid #cdbcaa; margin: 2em 0; }
+@media print { #write { max-width: none; padding: 0; background: white; font-size: 11pt; } #write pre, #write blockquote { break-inside: avoid; } #write h1, #write h2, #write h3 { break-after: avoid; } }

@@ -1,0 +1,14 @@
+node_modules/
+dist/
+output/
+*.log
+.env
+.env.*
+*.pem
+*.key
+*.pfx
+*.p12
+*.lnk
+coverage/
+test-results/
+playwright-report/

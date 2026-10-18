@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' file:; img-src 'self' file: data: blob: https: http:; font-src 'self' file: data:; connect-src 'self' http://127.0.0.1:* ws://127.0.0.1:*; base-uri 'self' file:; form-action 'none'; object-src 'none'; frame-src 'none'" />
+    <base id="document-base" href="./" />
+    <title>灵书 Markdown</title>
+  </head>
+  <body>
+    <div id="app">
+      <header class="app-header">
+        <div class="document-meta">
+          <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v5h4M8.5 12h7M8.5 16h5"/></svg></span>
+          <div class="document-label"><h1 id="document-name" data-i18n="untitled">未命名.md</h1><span id="document-status" data-i18n="opening">正在打开…</span></div>
+        </div>
+        <nav class="toolbar" data-i18n-aria="tools" aria-label="文档工具">
+          <div class="toolbar-group">
+            <button id="new-btn" type="button" data-i18n-title="newTitle" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H5v18h14V8zM14 3v5h5M9 14h6M12 11v6"/></svg><span data-i18n="new">新建</span></button>
+            <button id="open-btn" type="button" data-i18n-title="openTitle" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7V5h6l2 2h10v3M3 10h18l-3 10H3z"/></svg><span data-i18n="open">打开</span></button>
+            <button id="save-btn" type="button" data-i18n-title="saveTitle" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3h13l3 3v15H4zM8 3v6h8V3M8 21v-8h8v8"/></svg><span data-i18n="save">保存</span></button>
+            <button id="export-btn" type="button" data-i18n-title="exportTitle" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 14v6h14v-6M12 3v12m-4-4 4 4 4-4"/></svg><span data-i18n="export">导出</span></button>
+          </div>
+          <div class="toolbar-group view-tools">
+            <button id="find-btn" type="button" data-i18n-title="findTitle" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/></svg><span data-i18n="find">查找</span></button>
+            <button id="source-btn" type="button" aria-pressed="false" data-i18n-title="sourceTitle" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 7-5 5 5 5m8-10 5 5-5 5m-3-13-2 20"/></svg><span data-i18n="source">源码</span></button>
+            <button id="outline-btn" type="button" aria-pressed="true" data-i18n-title="outlineTitle" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5h12M9 12h12M9 19h12M3 5h1M3 12h1M3 19h1"/></svg><span data-i18n="outline">大纲</span></button>
+            <button id="focus-btn" type="button" aria-pressed="false" data-i18n-title="focusTitle" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5M8 12h8"/></svg><span data-i18n="focus">专注</span></button>
+            <button id="typewriter-btn" type="button" aria-pressed="false" data-i18n-title="typewriterTitle" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16v12H4zM7 8V3h10v5M8 12h1m3 0h1m3 0h1M8 16h8"/></svg><span data-i18n="typewriter">打字机</span></button>
+            <button id="theme-btn" type="button" aria-pressed="false" data-i18n-title="themeTitle" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 15.5A9 9 0 0 1 8.5 4 9 9 0 1 0 20 15.5z"/></svg><span>深色</span></button>
+            <button id="custom-theme-btn" type="button" data-i18n-title="customThemeTitle" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18h1a2 2 0 0 0 1-4c-1-1 0-3 2-3h2a3 3 0 0 0 3-3 9 9 0 0 0-9-8z"/><circle cx="7" cy="10" r=".8"/><circle cx="11" cy="7" r=".8"/><circle cx="16" cy="8" r=".8"/></svg><span data-i18n="themes">主题</span></button>
+            <button id="language-btn" type="button" data-i18n-title="languageTitle" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h12M9 3v2m4 0c-1 7-4 10-9 13M5 9c2 4 4 6 8 8m1 4 4-12 4 12m-7-4h6"/></svg><span data-i18n="language">语言</span></button>
+            <button id="feedback-btn" type="button" data-i18n-title="feedbackTitle" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v12H9l-5 4zM8 8h8M8 12h5"/></svg><span data-i18n="feedback">反馈</span></button>
+          </div>
+        </nav>
+      </header>
+      <div id="notice" class="notice" role="status" aria-live="polite" hidden><span id="notice-text"></span><button id="notice-dismiss" type="button" data-i18n-aria="dismiss">×</button></div>
+      <main class="workspace">
+        <aside id="outline-panel" class="outline-panel" data-i18n-aria="documentOutline"><div class="outline-caption" data-i18n="documentOutline">文档大纲</div><nav id="outline-list" data-i18n-aria="headingNavigation"></nav><div class="outline-foot"><b data-i18n="brand">灵书</b> <span>Markdown</span></div></aside>
+        <section class="document-workspace" data-i18n-aria="documentContent">
+          <div id="editor" data-i18n-aria="editor"></div>
+          <textarea id="source-editor" data-i18n-aria="markdownSource" spellcheck="false" hidden></textarea>
+          <div id="startup-error" class="startup-error" hidden><span class="error-mark" aria-hidden="true">!</span><h2 data-i18n="startupTitle">暂时无法打开编辑器</h2><p id="startup-error-message"></p></div>
+        </section>
+      </main>
+      <footer class="statusbar"><span id="word-count">0 字</span><span id="mode-label" data-i18n="richMode">排版模式</span><span class="statusbar-spacer"></span><span id="save-indicator" data-i18n="localDocument">本地 Markdown 文档</span><span class="status-dot" aria-hidden="true"></span><span data-i18n="brand">灵书</span></footer>
+    </div>
+    <section id="find-panel" class="find-panel" role="search" data-i18n-aria="findHeading" hidden>
+      <div class="find-heading"><strong data-i18n="findHeading">查找与替换</strong><button id="find-close" type="button" class="dialog-close" data-i18n-aria="closeFind">×</button></div>
+      <form id="find-form"><label class="field-label" for="find-query" data-i18n="searchQuery">查找内容</label><input id="find-query" type="text" autocomplete="off" spellcheck="false" /><div class="find-actions"><button id="find-previous" type="button" class="secondary-button" data-i18n="previous">上一个</button><button id="find-next" type="submit" class="secondary-button" data-i18n="next">下一个</button></div></form>
+      <div id="replace-fields"><label class="field-label" for="replace-text" data-i18n="replacement">替换为</label><input id="replace-text" type="text" autocomplete="off" spellcheck="false" /><div class="find-actions"><button id="replace-one" type="button" class="secondary-button" data-i18n="replace">替换</button><button id="replace-all" type="button" class="secondary-button" data-i18n="replaceAll">全部替换</button></div></div>
+      <p class="find-hint" data-i18n="findHint">按原文精确查找，区分大小写</p><p id="find-result" class="dialog-message" role="status" aria-live="polite"></p>
+    </section>
+    <dialog id="export-dialog" class="settings-dialog" aria-labelledby="export-title">
+      <form id="export-form">
+        <div class="dialog-heading"><div><span class="dialog-eyebrow" data-i18n="exportEyebrow">导出文档</span><h2 id="export-title" data-i18n="exportHeading">把文字带到别处</h2></div><button class="dialog-close" type="button" data-close-dialog="export-dialog" data-i18n-aria="closeExport">×</button></div>
+        <p class="dialog-description" data-i18n="exportDescription">导出当前内容，不改动 Markdown 原文件。</p>
+        <label class="field-label" for="export-format" data-i18n="format">文件格式</label><select id="export-format"><option value="pdf" data-i18n="pdfDocument">PDF 文档</option><option value="html" data-i18n="htmlDocument">HTML 网页</option></select>
+        <div id="export-pdf-options">
+          <div class="field-grid"><div><label class="field-label" for="export-paper" data-i18n="paper">纸张</label><select id="export-paper"><option value="A4">A4</option><option value="A5">A5</option><option value="Letter">Letter</option></select></div><div><label class="field-label" for="export-margin" data-i18n="margin">页边距（毫米）</label><input id="export-margin" type="number" min="0" max="50" step="1" value="20" required /></div></div>
+          <label class="check-field"><input id="export-landscape" type="checkbox" /><span data-i18n="landscape">横向页面</span></label><label class="check-field"><input id="export-page-numbers" type="checkbox" checked /><span data-i18n="pageNumbers">显示页码</span></label>
+        </div>
+        <div id="export-html-options" hidden><label class="check-field"><input id="export-styles" type="checkbox" checked /><span data-i18n="includeStyles">包含当前主题样式</span></label><label class="check-field"><input id="export-outline" type="checkbox" /><span data-i18n="includeOutline">包含文档大纲</span></label></div>
+        <p id="export-message" class="dialog-message" role="status" aria-live="polite"></p>
+        <div class="dialog-actions"><button type="button" class="secondary-button" data-close-dialog="export-dialog" data-i18n="cancel">取消</button><button id="export-confirm" type="submit" class="primary-button" data-i18n="exportConfirm">选择位置并导出</button></div>
+      </form>
+    </dialog>
+    <dialog id="theme-dialog" class="settings-dialog theme-dialog" aria-labelledby="theme-title">
+      <div class="dialog-heading"><div><span class="dialog-eyebrow" data-i18n="themeEyebrow">阅读与书写</span><h2 id="theme-title" data-i18n="themeHeading">让页面成为你的样子</h2></div><button class="dialog-close" type="button" data-close-dialog="theme-dialog" data-i18n-aria="closeThemes">×</button></div>
+      <p class="dialog-description" data-i18n="themeDescription">选择本地 CSS 主题，或为默认页面添加自己的样式。</p>
+      <label class="field-label" for="theme-select" data-i18n="bodyTheme">正文主题</label><select id="theme-select"><option value="" data-i18n="defaultTheme">灵书默认</option></select>
+      <div class="theme-tools"><button id="theme-import" type="button" class="secondary-button" data-i18n="importCss">导入 CSS…</button><button id="theme-folder" type="button" class="secondary-button" data-i18n="themeFolder">打开主题目录</button><button id="theme-refresh" type="button" class="text-button" data-i18n="refresh">刷新</button></div>
+      <div class="theme-help"><span data-i18n="themeDirectory">主题目录</span><code id="theme-directory" data-i18n="loading">正在读取…</code><p data-i18n="themeHelp">CSS、字体和图片可放在此目录。</p><p data-i18n="themeOrder">样式顺序：当前主题 → 通用自定义样式 → 主题自定义样式。</p></div>
+      <p id="theme-message" class="dialog-message" role="status" aria-live="polite"></p>
+      <div class="dialog-actions"><button type="button" class="secondary-button" data-close-dialog="theme-dialog" data-i18n="done">完成</button><button id="theme-apply" type="button" class="primary-button" data-i18n="applyTheme">应用主题</button></div>
+    </dialog>
+    <dialog id="feedback-dialog" class="settings-dialog feedback-dialog" aria-labelledby="feedback-heading" aria-describedby="feedback-privacy">
+      <form id="feedback-form" autocomplete="off" novalidate>
+        <div class="dialog-heading"><div><span class="dialog-eyebrow" data-i18n="feedbackEyebrow">一起改进灵书</span><h2 id="feedback-heading" data-i18n="feedbackHeading">向项目提交反馈</h2></div><button class="dialog-close" type="button" data-close-dialog="feedback-dialog" data-i18n-aria="closeFeedback">×</button></div>
+        <p id="feedback-privacy" class="dialog-description" data-i18n="feedbackPrivacy">仅发送你填写的内容和应用版本，并公开为 GitHub Issue。不会自动上传当前文档、日志或文件路径。</p>
+        <p id="feedback-version" class="feedback-meta"></p>
+        <p id="feedback-configuration" class="dialog-message" role="status" aria-live="polite"></p>
+        <div id="feedback-repository-row" class="feedback-repository" hidden><code id="feedback-repository-url"></code><div class="feedback-links"><button id="feedback-repository" type="button" class="text-button" data-i18n="feedbackRepository">项目仓库</button><button id="feedback-issues" type="button" class="text-button" data-i18n="feedbackIssues">查看已有 Issue</button></div></div>
+        <label class="field-label" for="feedback-kind" data-i18n="feedbackKind">反馈类型</label><select id="feedback-kind"><option value="bug" data-i18n="feedbackBug">问题报告</option><option value="suggestion" data-i18n="feedbackSuggestion">功能建议</option></select>
+        <label class="field-label" for="feedback-title" data-i18n="feedbackSubject">标题（最多 120 字符）</label><input id="feedback-title" type="text" maxlength="120" required />
+        <label class="field-label" for="feedback-body" data-i18n="feedbackBody">详细内容（最多 8000 字符）</label><textarea id="feedback-body" rows="6" maxlength="8000" required></textarea>
+        <label class="field-label" for="feedback-token" data-i18n="feedbackToken">提交者的 GitHub 令牌</label><input id="feedback-token" type="password" maxlength="1024" autocomplete="off" spellcheck="false" autocapitalize="off" aria-describedby="feedback-token-hint" />
+        <p id="feedback-token-hint" class="feedback-hint" data-i18n="feedbackTokenHint">仅用于这次提交，不会保存；请求结束或关闭面板后清空。</p><button id="feedback-token-help" type="button" class="text-button" data-i18n="feedbackTokenHelp">了解如何创建 GitHub 令牌</button>
+        <p id="feedback-status" class="dialog-message" role="status" aria-live="polite"></p><div id="feedback-success" hidden><button id="feedback-view-issue" type="button" class="secondary-button"></button></div>
+        <p class="feedback-hint" data-i18n="feedbackWebHint">网页选项会预填反馈内容，最后由你在浏览器中确认提交；不需要在此填写令牌。</p>
+        <div class="dialog-actions feedback-actions"><button id="feedback-web" type="button" class="secondary-button" data-i18n="feedbackWeb">在 GitHub 网页提交</button><button id="feedback-submit" type="submit" class="primary-button" data-i18n="feedbackSubmit">直接提交到 Issue</button></div>
+      </form>
+    </dialog>
+    <dialog id="language-dialog" class="settings-dialog language-dialog" aria-labelledby="language-title">
+      <div class="dialog-heading"><div><span class="dialog-eyebrow">灵书 · Lingshu</span><h2 id="language-title">选择语言 / Choose language</h2></div><button id="language-close" class="dialog-close" type="button" aria-label="关闭 / Close" hidden>×</button></div>
+      <p class="dialog-description">请选择界面语言，之后可在菜单中更改。<br />Choose your interface language. You can change it later in the menu.</p>
+      <div class="language-options"><button id="language-zh" type="button" class="secondary-button" lang="zh-CN">简体中文</button><button id="language-en" type="button" class="secondary-button" lang="en-US">English</button></div>
+      <p id="language-message" class="dialog-message" role="status" aria-live="polite"></p>
+    </dialog>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
