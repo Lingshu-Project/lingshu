@@ -13,6 +13,7 @@ contextBridge.exposeInMainWorld('inkstone', {
   openFeedbackLink: (target, issueNumber) => ipcRenderer.invoke('feedback:link', target, issueNumber),
   getPreferences: () => ipcRenderer.invoke('preferences:get'),
   setLanguage: (language) => ipcRenderer.invoke('preferences:set-language', language),
+  setEditorFontSize: (fontSize) => ipcRenderer.invoke('preferences:set-editor-font-size', fontSize),
   readClipboard: () => ipcRenderer.invoke('clipboard:read'),
   writeClipboard: (text) => ipcRenderer.invoke('clipboard:write', text),
   getInitialDocument: () => ipcRenderer.invoke('document:initial'),

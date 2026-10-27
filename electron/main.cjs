@@ -155,6 +155,10 @@ function installHandlers() {
     updateTitle(titleDirty);
     return { status: 'ok' };
   });
+  handle('preferences:set-editor-font-size', async (fontSize) => {
+    await preferencesStore.setEditorFontSize(fontSize);
+    return { status: 'ok' };
+  });
   const assertClipboard = (text) => {
     if (typeof text !== 'string' || Buffer.byteLength(text, 'utf8') > MAX_DOCUMENT_BYTES) {
       throw new Error(t('剪贴板内容必须是文本且不能超过 16 MB。'));

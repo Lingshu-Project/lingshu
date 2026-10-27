@@ -28,7 +28,7 @@ export interface ThemeState { directory: string; activeId: string | null; themes
 export type ThemeResult = { status: 'ok'; theme: ThemeState } | { status: 'cancelled' } | { status: 'error'; error: string }
 
 export type AppLanguage = 'zh-CN' | 'en-US'
-export interface AppPreferences { language: AppLanguage | null }
+export interface AppPreferences { language: AppLanguage | null; editorFontSize: number }
 export type FeedbackKind = 'bug' | 'suggestion'
 export type FeedbackErrorCode = 'notConfigured' | 'invalidInput' | 'missingToken' | 'unauthorized' | 'forbidden' | 'notFound' | 'rateLimited' | 'network' | 'submissionUnknown' | 'unexpected'
 export interface FeedbackPayload { kind: FeedbackKind; title: string; body: string }
@@ -46,6 +46,7 @@ export type AppCommand = 'new' | 'open' | 'save' | 'saveAs' | 'toggleSource' | '
 export interface InkstoneBridge {
   getPreferences(): Promise<AppPreferences>
   setLanguage(language: AppLanguage): Promise<{status: 'ok'} | {status:'error';error:string}>
+  setEditorFontSize(fontSize: number): Promise<{status: 'ok'} | {status:'error';error:string}>
   readClipboard(): Promise<string>
   writeClipboard(text: string): Promise<void>
   getInitialDocument(): Promise<DocumentResult>

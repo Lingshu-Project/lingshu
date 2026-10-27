@@ -22,6 +22,11 @@
             <button id="export-btn" type="button" data-i18n-title="exportTitle" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 14v6h14v-6M12 3v12m-4-4 4 4 4-4"/></svg><span data-i18n="export">导出</span></button>
           </div>
           <div class="toolbar-group view-tools">
+            <div class="toolbar-group font-size-tools" role="group" data-i18n-aria="editorFontSize" aria-label="正文字号">
+              <button id="font-decrease-btn" type="button" data-i18n-title="fontDecreaseTitle" data-i18n-aria="fontDecreaseTitle" aria-label="缩小正文字号" disabled>A−</button>
+              <output id="font-size-value" aria-live="polite" aria-atomic="true">18px</output>
+              <button id="font-increase-btn" type="button" data-i18n-title="fontIncreaseTitle" data-i18n-aria="fontIncreaseTitle" aria-label="放大正文字号" disabled>A+</button>
+            </div>
             <button id="find-btn" type="button" data-i18n-title="findTitle" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/></svg><span data-i18n="find">查找</span></button>
             <button id="source-btn" type="button" aria-pressed="false" data-i18n-title="sourceTitle" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 7-5 5 5 5m8-10 5 5-5 5m-3-13-2 20"/></svg><span data-i18n="source">源码</span></button>
             <button id="outline-btn" type="button" aria-pressed="true" data-i18n-title="outlineTitle" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5h12M9 12h12M9 19h12M3 5h1M3 12h1M3 19h1"/></svg><span data-i18n="outline">大纲</span></button>

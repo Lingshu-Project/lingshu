@@ -1,4 +1,5 @@
 import './styles.css'
+import './editor-typography.css'
 import { createMarkdownEditor } from './editor'
 import { renderMarkdownForExport } from './export-content'
 import type { AppCommand, AppLanguage, DocumentInfo, EditorCommand, ExportOptions, FeedbackErrorCode, FeedbackInfo, FeedbackKind, FeedbackPayload, MarkdownEditor, OutlineHeading, ThemeResult, ThemeState } from './contracts'
@@ -34,6 +35,9 @@ const findPanel = element('find-panel')
 const findQuery = element<HTMLInputElement>('find-query')
 const replaceText = element<HTMLInputElement>('replace-text')
 const sourceCommands = new SourceCommands(sourceEditor)
+const fontSizeValue = element<HTMLOutputElement>('font-size-value')
+const MIN_EDITOR_FONT_SIZE = 14
+const MAX_EDITOR_FONT_SIZE = 24
 const userThemeStyle = document.createElement('style')
 userThemeStyle.id = 'user-theme-style'
 document.head.append(userThemeStyle)
@@ -42,6 +46,8 @@ const buttons = {
   open: element<HTMLButtonElement>('open-btn'),
   save: element<HTMLButtonElement>('save-btn'),
   source: element<HTMLButtonElement>('source-btn'),
+  fontDecrease: element<HTMLButtonElement>('font-decrease-btn'),
+  fontIncrease: element<HTMLButtonElement>('font-increase-btn'),
   outline: element<HTMLButtonElement>('outline-btn'),
   focus: element<HTMLButtonElement>('focus-btn'),
   theme: element<HTMLButtonElement>('theme-btn'),
@@ -67,6 +73,8 @@ let outlineVisible = true
 let focusMode = false
 let typewriterMode = false
 let darkTheme = false
+let editorFontSize = 18
+let fontPreferencePending = false
 let busy = false
 let applyingDocument = false
 let lastDirty: boolean | undefined
@@ -139,9 +147,41 @@ function synchronizeRichText(markdown: string, resetHistory = false): void {
   } finally { applyingDocument = false }
 }
 
+function synchronizeEditorFontControls(): void {
+  fontSizeValue.textContent = `${editorFontSize}px`
+  buttons.fontDecrease.disabled = busy || !editor || fontPreferencePending || editorFontSize <= MIN_EDITOR_FONT_SIZE
+  buttons.fontIncrease.disabled = busy || !editor || fontPreferencePending || editorFontSize >= MAX_EDITOR_FONT_SIZE
+}
+
+function applyEditorFontSize(size: number): void {
+  editorFontSize = size
+  document.documentElement.style.setProperty('--editor-font-size', `${size}px`)
+  synchronizeEditorFontControls()
+}
+
+async function changeEditorFontSize(delta: number): Promise<void> {
+  if (busy || !editor || fontPreferencePending) return
+  const next = Math.max(MIN_EDITOR_FONT_SIZE, Math.min(MAX_EDITOR_FONT_SIZE, editorFontSize + delta))
+  if (next === editorFontSize) return
+  const previous = editorFontSize
+  fontPreferencePending = true
+  applyEditorFontSize(next)
+  try {
+    const result = await bridge.setEditorFontSize(next)
+    if (result.status === 'error') throw new Error(result.error)
+  } catch (error) {
+    applyEditorFontSize(previous)
+    showNotice(t('fontSizeFailed', { error: errorText(error) }))
+  } finally {
+    fontPreferencePending = false
+    synchronizeEditorFontControls()
+  }
+}
+
 function setBusy(value: boolean): void {
   busy = value
   for (const button of Object.values(buttons)) button.disabled = value || !editor
+  synchronizeEditorFontControls()
   editorRoot.inert = value
   sourceEditor.readOnly = value
   for (const control of document.querySelectorAll<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | HTMLButtonElement>('.settings-dialog input, .settings-dialog textarea, .settings-dialog select, .settings-dialog button')) control.disabled = value
@@ -727,6 +767,8 @@ buttons.new.addEventListener('click', () => { void fileAction('new') })
 buttons.open.addEventListener('click', () => { void fileAction('open') })
 buttons.save.addEventListener('click', () => { void fileAction('save') })
 buttons.source.addEventListener('click', toggleSource)
+buttons.fontDecrease.addEventListener('click', () => { void changeEditorFontSize(-1) })
+buttons.fontIncrease.addEventListener('click', () => { void changeEditorFontSize(1) })
 buttons.outline.addEventListener('click', toggleOutline)
 buttons.focus.addEventListener('click', toggleFocus)
 buttons.typewriter.addEventListener('click', toggleTypewriter)
@@ -822,6 +864,7 @@ async function initialize(): Promise<void> {
   refreshLanguage()
   if (!bridge) throw new Error(t('bridgeMissing'))
   const preferences = await bridge.getPreferences()
+  applyEditorFontSize(preferences.editorFontSize)
   if (preferences.language === 'zh-CN' || preferences.language === 'en-US') {
     languageRequired = false
     setInterfaceLanguage(preferences.language)

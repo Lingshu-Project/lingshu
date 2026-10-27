@@ -1,0 +1,113 @@
+:root {
+  --caret-color: #294a32;
+}
+
+body[data-theme='dark'] {
+  --caret-color: #edf7ea;
+}
+
+#write {
+  --prosemirror-virtual-cursor-color: var(--caret-color);
+}
+
+:where(#editor .milkdown .ProseMirror) {
+  max-width: 1000px;
+  font-size: var(--editor-font-size, 18px);
+  line-height: 1.85;
+  caret-color: var(--caret-color);
+}
+
+#source-editor {
+  caret-color: var(--caret-color);
+}
+
+#write p {
+  line-height: inherit;
+  margin: 0 0 1.15em;
+}
+
+#write .milkdown-list-item-block .children p {
+  line-height: inherit;
+  margin: 0 0 0.45em;
+}
+
+:where(#editor .milkdown .ProseMirror) li {
+  line-height: inherit;
+}
+
+:where(#editor .milkdown .ProseMirror) li > p {
+  margin: 0 0 0.45em;
+  line-height: inherit;
+}
+
+#write li::marker {
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 1em;
+  font-weight: 600;
+}
+
+#write ol > li::marker {
+  font-variant-numeric: tabular-nums;
+}
+
+#write .milkdown-list-item-block > .list-item {
+  gap: 0.35em;
+}
+
+#write .milkdown-list-item-block li .label-wrapper {
+  align-items: flex-start;
+  color: var(--text);
+  flex: 0 0 1.5em;
+  height: 1.85em;
+  justify-content: flex-end;
+  line-height: inherit;
+  width: 1.5em;
+}
+
+#write .milkdown-list-item-block li .label-wrapper svg {
+  fill: currentColor;
+}
+
+#write .milkdown-list-item-block li .label-wrapper .label.ordered {
+  align-items: baseline;
+  display: flex;
+  font-family: var(--font-body);
+  font-size: 1em;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  height: 1.85em;
+  justify-content: flex-end;
+  line-height: inherit;
+  padding: 0;
+  width: 100%;
+}
+
+#write .milkdown-list-item-block li .label-wrapper .label.bullet {
+  align-items: center;
+  display: flex;
+  height: 1.85em;
+  justify-content: center;
+  padding: 0;
+  width: 100%;
+}
+
+.font-size-tools {
+  gap: 0;
+}
+
+.font-size-tools button {
+  min-width: 32px;
+  padding: 0 4px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: -0.06em;
+}
+
+.font-size-tools output {
+  min-width: 36px;
+  color: var(--muted);
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}

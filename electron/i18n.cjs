@@ -2,6 +2,7 @@
 
 let language = 'zh-CN'
 const english = {
+  '字号必须是 14 至 24 的整数。': 'Font size must be a whole number from 14 to 24.',
   '反馈与建议…': 'Feedback and Suggestions…',
   '灵书 Markdown': 'Lingshu Markdown', '未命名.md': 'Untitled.md', '开始写作.md': 'Start writing.md',
   '无效的窗口请求。': 'Invalid window request.', '无效的页面来源。': 'Invalid page origin.',

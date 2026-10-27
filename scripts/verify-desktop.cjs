@@ -43,6 +43,21 @@ async function main() {
     assert.deepEqual(await window.locator('#outline-list .outline-heading').allTextContents(), ['中文标题', '第二节']);
     assert.ok(await window.locator('#editor table').count() > 0);
     await window.locator('#editor .katex').first().waitFor({ timeout: 10000 });
+    const editorStyle = await window.locator('#write').evaluate((node) => {
+      const style = getComputedStyle(node);
+      return { fontSize: style.fontSize, maxWidth: style.maxWidth, lineHeight: style.lineHeight, virtualCursorColor: style.getPropertyValue('--prosemirror-virtual-cursor-color').trim() };
+    });
+    assert.equal(editorStyle.fontSize, '18px');
+    assert.equal(editorStyle.maxWidth, '1000px');
+    assert.ok(Number.parseFloat(editorStyle.lineHeight) >= 33);
+    assert.equal(editorStyle.virtualCursorColor, '#294a32');
+    assert.equal(await window.locator('#source-editor').evaluate((node) => getComputedStyle(node).caretColor), 'rgb(41, 74, 50)');
+    assert.equal(await window.locator('#font-size-value').innerText(), '18px');
+    await window.locator('#font-increase-btn').click();
+    assert.equal(await window.locator('#write').evaluate((node) => getComputedStyle(node).fontSize), '19px');
+    await window.waitForFunction(async () => (await window.inkstone.getPreferences()).editorFontSize === 19);
+    await window.locator('#font-decrease-btn').click();
+    assert.equal(await window.locator('#write').evaluate((node) => getComputedStyle(node).fontSize), '18px');
     assert.equal(await window.locator('#document-status').innerText(), '已保存');
     passed('实际 Electron 启动、CLI 打开、中文、表格与公式排版');
     const image = window.locator('#editor img').first();
@@ -110,6 +125,92 @@ async function main() {
     await window.keyboard.press('Enter');
     await window.keyboard.insertText('写作内容');
     assert.equal(await window.locator('#editor h1').innerText(), '新标题');
+    await window.keyboard.press('Enter');
+    await window.keyboard.type('1. ');
+    await window.keyboard.insertText('Primary item');
+    await window.keyboard.press('Enter');
+    await window.keyboard.press('Tab');
+    await window.waitForFunction(() => document.querySelector('#write ol')?.querySelectorAll(':scope > .milkdown-list-item-block > li .children ol > .milkdown-list-item-block > li').length === 1);
+    await window.keyboard.insertText('Nested item one');
+    await window.keyboard.press('Enter');
+    await window.waitForFunction(() => document.querySelector('#write ol')?.querySelectorAll(':scope > .milkdown-list-item-block > li .children ol > .milkdown-list-item-block > li').length === 2);
+    await window.keyboard.insertText('Nested item two');
+    await window.keyboard.press('Enter');
+    await window.keyboard.press('Shift+Tab');
+    await window.waitForFunction(() => document.querySelector('#write ol')?.querySelectorAll(':scope > .milkdown-list-item-block > li').length === 2);
+    await window.keyboard.insertText('Second primary item');
+    await window.keyboard.press('Enter');
+    await window.keyboard.press('Enter');
+    await window.keyboard.insertText('After ordered list');
+    await window.waitForFunction(() => !document.getSelection()?.anchorNode?.parentElement?.closest('li'));
+    await window.keyboard.press('Enter');
+    await window.keyboard.type('- ');
+    await window.waitForFunction(() => document.querySelectorAll('#write ul > .milkdown-list-item-block > li').length === 1);
+    await window.keyboard.insertText('Bullet item');
+    await window.keyboard.press('Enter');
+    await window.keyboard.press('Backspace');
+    assert.equal(await window.locator('#write ul > .milkdown-list-item-block > li').count(), 1);
+    await window.keyboard.press('Enter');
+    await window.keyboard.press('Enter');
+    await window.waitForFunction(() => !document.getSelection()?.anchorNode?.parentElement?.closest('li'));
+    await window.keyboard.insertText('After bullet backspace');
+    await window.keyboard.press('Enter');
+    await window.keyboard.insertText('Undo check');
+    await window.keyboard.press('Control+z');
+    assert.doesNotMatch(await rich.innerText(), /Undo check/);
+    await window.keyboard.press('Control+Shift+z');
+    assert.match(await rich.innerText(), /Undo check/);
+    const listStructure = await window.locator('#write').evaluate((root) => {
+      const ordered = root.querySelector('ol');
+      const bullet = root.querySelector('ul');
+      const orderedItem = ordered?.querySelector(':scope > .milkdown-list-item-block > li');
+      const bulletItem = bullet?.querySelector(':scope > .milkdown-list-item-block > li');
+      const orderedLabel = orderedItem?.querySelector('.label-wrapper .label.ordered');
+      const bulletWrapper = bulletItem?.querySelector('.label-wrapper');
+      const bulletLabel = bulletWrapper?.querySelector('.label.bullet');
+      const bulletIcon = bulletLabel?.querySelector('svg');
+      const orderedText = orderedItem?.querySelector('.children p');
+      const bulletText = bulletItem?.querySelector('.children p');
+      const orderedStyle = orderedLabel && getComputedStyle(orderedLabel);
+      const bulletStyle = bulletWrapper && getComputedStyle(bulletWrapper);
+      const bulletLabelStyle = bulletLabel && getComputedStyle(bulletLabel);
+      const orderedLabelRect = orderedLabel?.getBoundingClientRect();
+      const orderedTextRect = orderedText?.getBoundingClientRect();
+      const bulletIconRect = bulletIcon?.getBoundingClientRect();
+      const bulletTextRect = bulletText?.getBoundingClientRect();
+      const orderedTextLineHeight = orderedText && parseFloat(getComputedStyle(orderedText).lineHeight);
+      const bulletTextLineHeight = bulletText && parseFloat(getComputedStyle(bulletText).lineHeight);
+      return {
+        topLevelItems: ordered?.querySelectorAll(':scope > .milkdown-list-item-block > li').length ?? 0,
+        nestedItems: ordered?.querySelectorAll(':scope > .milkdown-list-item-block > li .children ol > .milkdown-list-item-block > li').length ?? 0,
+        bulletItems: bullet?.querySelectorAll(':scope > .milkdown-list-item-block > li').length ?? 0,
+        orderedMarker: orderedStyle && { color: orderedStyle.color, fontSize: orderedStyle.fontSize, fontFamily: orderedStyle.fontFamily, lineHeight: orderedStyle.lineHeight },
+        orderedTextLineHeight: orderedTextLineHeight && `${orderedTextLineHeight}px`,
+        orderedMarkerCenterDiff: orderedLabelRect && orderedTextRect ? Math.abs((orderedLabelRect.top + orderedLabelRect.height / 2) - (orderedTextRect.top + orderedTextLineHeight / 2)) : null,
+        orderedMarkerAlignItems: orderedStyle?.alignItems,
+        bulletMarker: bulletStyle && { color: bulletStyle.color, fontSize: bulletStyle.fontSize, fill: bulletIcon ? getComputedStyle(bulletIcon).fill : null },
+        bulletLabelAlignItems: bulletLabelStyle?.alignItems,
+        bulletTextLineHeight: bulletTextLineHeight && `${bulletTextLineHeight}px`,
+        bulletMarkerCenterDiff: bulletIconRect && bulletTextRect ? Math.abs((bulletIconRect.top + bulletIconRect.height / 2) - (bulletTextRect.top + bulletTextLineHeight / 2)) : null,
+      };
+    });
+    assert.equal(listStructure.topLevelItems, 2);
+    assert.equal(listStructure.nestedItems, 2);
+    assert.equal(listStructure.bulletItems, 1);
+    assert.equal(listStructure.orderedMarker.color, 'rgb(53, 65, 59)');
+    assert.equal(listStructure.orderedMarker.fontSize, '18px');
+    assert.match(listStructure.orderedMarker.fontFamily, /Noto Serif SC/);
+    assert.equal(listStructure.orderedMarker.lineHeight, listStructure.orderedTextLineHeight);
+    assert.ok(listStructure.orderedMarkerCenterDiff < 1);
+    assert.equal(listStructure.orderedMarkerAlignItems, 'baseline');
+    assert.equal(listStructure.bulletMarker.color, 'rgb(53, 65, 59)');
+    assert.equal(listStructure.bulletMarker.fontSize, '18px');
+    assert.equal(listStructure.bulletMarker.fill, 'rgb(53, 65, 59)');
+    assert.equal(listStructure.bulletLabelAlignItems, 'center');
+    assert.equal(listStructure.bulletTextLineHeight, listStructure.orderedTextLineHeight);
+    assert.ok(listStructure.bulletMarkerCenterDiff < 1);
+    const listScreenshot = path.join(artifacts, 'list-typography.png');
+    await window.screenshot({ path: listScreenshot });
     await queue('save', secondFile);
     await save();
     assert.match(await fs.readFile(secondFile, 'utf8'), /# 新标题[\s\S]*写作内容/);
@@ -256,6 +357,7 @@ async function main() {
     await window.locator('#source-btn').click();
     await window.locator('#theme-btn').click();
     assert.equal(await window.locator('body').getAttribute('data-theme'), 'dark');
+    assert.equal(await window.locator('#write').evaluate((node) => getComputedStyle(node).getPropertyValue('--prosemirror-virtual-cursor-color').trim()), '#edf7ea');
     await window.screenshot({ path: path.join(artifacts, 'dark.png') });
     await window.locator('#theme-btn').click();
     await window.screenshot({ path: path.join(artifacts, 'light.png') });

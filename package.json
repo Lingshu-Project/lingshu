@@ -12,7 +12,7 @@
     "typecheck": "tsc --noEmit",
     "build": "node scripts/prepare-export-assets.cjs && npm run typecheck && vite build --logLevel warn",
     "start": "electron .",
-    "test": "node --experimental-strip-types --test tests/documents.test.cjs tests/export.test.mjs tests/feedback.test.cjs",
+    "test": "node --experimental-strip-types --test tests/documents.test.cjs tests/export.test.mjs tests/feedback.test.cjs tests/preferences.test.cjs",
     "verify:desktop": "node scripts/verify-desktop.cjs",
     "verify:language": "node scripts/verify-language.cjs",
     "package:portable": "node scripts/package-portable.cjs",
